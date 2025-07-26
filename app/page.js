@@ -15,7 +15,7 @@ export default function HomePage(){
         return;
       };
 
-        const res = await fetch('http://localhost:4000/api/save',{
+        const res = await fetch('https://training-repo-backend.onrender.com/api/save',{
           method:'POST',
           headers: {'Content-Type':'application/json'},
           body:JSON.stringify({text})

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 export default async function Page({params}){
 
     const{id} = await params;
-    const res = await fetch(`http://localhost:4000/api/text/${id}`)
+    const res = await fetch(`https://training-repo-backend.onrender.com/api/text/${id}`)
 
     if(!res.ok){
         
