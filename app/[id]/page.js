@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 export default async function Page({params}){
 
     const{id} = await params;
-    const apiURL = process.env.NEXT_PUBLIC_API_URL;
-    const res = await fetch(`${apiURL}/api/text/${id}`)
+    
+    const res = await fetch(`https://training-repo-backend.onrender.com/api/text/${id}`)
 
     if(!res.ok){
         

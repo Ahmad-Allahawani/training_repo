@@ -14,8 +14,8 @@ export default function HomePage(){
         // emtpy_text = true
         return;
       };
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        const res = await fetch(`${apiUrl}/api/save`,{
+        
+        const res = await fetch(`https://training-repo-backend.onrender.com/api/save`,{
           method:'POST',
           headers: {'Content-Type':'application/json'},
           body:JSON.stringify({text})
