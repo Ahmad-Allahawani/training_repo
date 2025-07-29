@@ -28,7 +28,7 @@ app.get('/api/text/:id',(req,res)=>{
     res.json({text});
 });
 
-app.get('/admin', (req, res) => {
+app.get('/', (req, res) => {
   
     res.send(`
     <main className="p-4 max-w-2xl mx-auto">
