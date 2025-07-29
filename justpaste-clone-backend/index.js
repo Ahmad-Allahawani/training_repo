@@ -28,6 +28,22 @@ app.get('/api/text/:id',(req,res)=>{
     res.json({text});
 });
 
+app.get('/admin', (req, res) => {
+    // Option 1: Send HTML
+    res.send(`
+      <html>
+        <head><title>Admin Panel</title></head>
+        <body>
+          <h1>Welcome to Admin Panel</h1>
+          <p>This is served directly from the backend server</p>
+        </body>
+      </html>
+    `);
+  
+    // Option 2 (instead): Send JSON
+    // res.json({ message: 'Welcome to Admin Panel' });
+  });
+
 app.listen(PORT,()=>{
     console.log(`server running on http://localhost:${PORT}`)
 })
