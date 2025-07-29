@@ -21,22 +21,12 @@ pnpm dev
 
 bun dev
 
-Open http://localhost:3000 with your browser to see the result.
+Open http://localhost:3000 with your browser to see the frontend result.
 You can start editing the page by modifying app/page.js. The page auto-updates as you edit the file.
 
 This project uses next/font to automatically optimize and load Geist, a new font family for Vercel.
 
-Learn More
-To learn more about Next.js, take a look at the following resources:
+use node index.js to run the backend server and access the admin page.
 
-Next.js Documentation – learn about Next.js features and API.
-
-Learn Next.js – an interactive Next.js tutorial.
-
-Next.js GitHub repository – your feedback and contributions are welcome!
-
-Deploy on Vercel
-The easiest way to deploy your Next.js app is to use the Vercel Platform from the creators of Next.js.
-
-Check out the Next.js deployment documentation for more details.
+Open http://localhost:4000 with your browser to see the backend result.
 
