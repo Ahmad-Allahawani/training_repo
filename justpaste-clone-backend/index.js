@@ -29,19 +29,15 @@ app.get('/api/text/:id',(req,res)=>{
 });
 
 app.get('/admin', (req, res) => {
-    // Option 1: Send HTML
+  
     res.send(`
-      <html>
-        <head><title>Admin Panel</title></head>
-        <body>
-          <h1>Welcome to Admin Panel</h1>
-          <p>This is served directly from the backend server</p>
-        </body>
-      </html>
+    <main className="p-4 max-w-2xl mx-auto">
+            <h1 className="text-2xl font-bold mb-4 ">Shared Text</h1>
+            <pre className="text-black whitespace-pre-wrap bg-gray-100 p-4 rounded">{data.text}</pre>
+    </main>
     `);
   
-    // Option 2 (instead): Send JSON
-    // res.json({ message: 'Welcome to Admin Panel' });
+  
   });
 
 app.listen(PORT,()=>{
