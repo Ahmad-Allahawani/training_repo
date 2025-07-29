@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path')
 const {nanoid} = require('nanoid');
 
 
@@ -9,6 +10,11 @@ const store = {};
 
 app.use(cors());
 app.use(express.json());
+
+
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','pug');
+app.use(express.static(path.join(__dirname,'public')))
 
 app.post('/api/save',(req,res)=>  {
     const {text} = req.body;
@@ -30,12 +36,7 @@ app.get('/api/text/:id',(req,res)=>{
 
 app.get('/', (req, res) => {
   
-    res.send(`
-    <main className="p-4 max-w-2xl mx-auto">
-            <h1 className="text-2xl font-bold mb-4 ">Shared Text</h1>
-            <pre className="text-black whitespace-pre-wrap bg-gray-100 p-4 rounded">{data.text}</pre>
-    </main>
-    `);
+    res.render('index')
   
   
   });

@@ -5,17 +5,24 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node index.js"
-    
+    "start": "node index.js",
+    "build:css": "postcss public/styles/tailwind.css -o public/styles/styles.css"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "autoprefixer": "^10.4.21",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "nanoid": "^5.1.5"
+    "nanoid": "^5.1.5",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
   }
 }
