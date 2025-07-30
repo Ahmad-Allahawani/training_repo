@@ -15,13 +15,13 @@ export default function HomePage(){
         return;
       };
         
-        const res = await fetch(`https://training-repo.onrender.com/api/save`,{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save`,{
           method:'POST',
           headers: {'Content-Type':'application/json'},
           body:JSON.stringify({text})
       })
-
       const data = await res.json()
+      
       router.push(`/${data.id}`)
       // if(emtpy_text){
       //   router.push(``)
