@@ -31,4 +31,5 @@ use node index.js to run the backend server and access the admin page.
 Open http://localhost:4000 with your browser to see the backend result.
 
 the link to the admin page https://training-repo.onrender.com .
+the admin email : admin@gmail.com and password : 1234
 
