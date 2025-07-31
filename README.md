@@ -31,5 +31,20 @@ use node index.js to run the backend server and access the admin page.
 Open http://localhost:4000 with your browser to see the backend result.
 
 the link to the admin page https://training-repo.onrender.com .
-the admin email : admin@gmail.com and password : 1234
+
+the admin email : admin@gmail.com and password : 1234.
+
+latest update with commit name () :
+
+fixed the login route to deny any access to the dashboard through the url
+without entering the correct email and password.
+
+fixed some design issues with the main page , [id] page , and the dashboard page.
+
+some adjustment to the index.js file to handle the new changes, by adding
+express-session to prevent access to dashboard by unauthorized users,
+
+express-flash to render the login page with alert if the email or passsword are wrong.
+
+some adjustment to the .env file.
 

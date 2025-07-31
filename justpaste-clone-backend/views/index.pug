@@ -6,6 +6,9 @@ html(lang="en")
     title website number 2
     link(rel="stylesheet", href="./styles/styles.css")
   body(class="bg-gray-100 min-h-screen flex items-center justify-center")
+    if messages.error
+      script.
+        alert("#{messages.error[0]}");
     sectio
       div(class="w-full max-w-sm bg-white p-8 rounded-lg shadow-lg")
         form(action="/login" method="POST")
@@ -36,3 +39,4 @@ html(lang="en")
 
     script(type="module", src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js")
     script(nomodule, src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js")
+  

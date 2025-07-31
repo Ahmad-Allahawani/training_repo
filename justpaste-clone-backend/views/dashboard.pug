@@ -2,8 +2,26 @@ doctype html
 html
   head
     title Dashboard
-  body(class="bg-green-100 h-screen flex justify-center items-center flex-col")
-    h1.text-3xl.font-bold Welcome to your dashboard!
-    ul
-      each text in store
-        li id: #{text.id} - Text: #{text.text}
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css")
+  body(class="bg-green-100 min-h-screen flex justify-center items-center flex-col p-8")
+    h1.text-3xl.font-bold.mb-6 Welcome to your dashboard!
+    
+    if store.length
+      table(class="table-auto border-collapse border border-green-800 bg-white shadow-lg rounded-lg overflow-hidden")
+        thead
+          tr.bg-green-600.text-white
+            th.px-6.py-3.text-left ID
+            th.px-6.py-3.text-left Text
+            th.px-6.py-3.text-left Actions
+        tbody
+          each text in store
+            tr(class = "border-b.border-green-300.hover:bg-green-50")
+              td.px-6.py-4 #{text.id}
+              td.px-6.py-4 #{text.text}
+              td.px-6.py-4
+                form(method="POST", action=`/delete`)
+                  input(type="hidden", name="id" value=text.id)
+                  button(type="submit", class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded transition duration-200")
+                    | Delete
+    else
+      p.text-gray-600 No data available.

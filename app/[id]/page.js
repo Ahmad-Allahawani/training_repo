@@ -14,10 +14,16 @@ export default async function Page({params}){
     const data = await res.json();
 
     return(
-        <main className="p-4 max-w-2xl mx-auto">
-            <h1 className="text-2xl font-bold mb-4 ">Shared Text</h1>
-            <pre className="text-black whitespace-pre-wrap bg-gray-100 p-4 rounded">{data.text}</pre>
-        </main>
+        <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+        <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
+          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Shared Text</h1>
+      
+          <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
+            {data.text}
+          </pre>
+        </div>
+      </main>
+      
     )
 
 }
