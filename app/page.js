@@ -37,7 +37,7 @@ export default function HomePage(){
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Share Your Text</h1>
     
           <Editor
-          apiKey="jkfqelebfopjtojkgzxwvdyvrijpodcbzks7c9f8zsgk8hej" 
+          apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           init={{
             height: 300,
             menubar: false,
