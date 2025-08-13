@@ -7,7 +7,7 @@ const flash = require('express-flash');
 
 require('dotenv').config({ path: path.resolve('../.env.local')});
 
-const { stripHtml } = require('string-strip-html');
+
 
 
 const app = express();
@@ -47,15 +47,15 @@ app.post('/api/save',(req,res)=>  {
     store_without_html.push({id,clean_text});
    
     // console.log('[STORE UPDATED]:', store_without_html);
-    // console.log('[STORE UPDATED]:', store_with_html);
+    
     res.json({id});
 
     
 });
 
 app.get('/api/text/:id',(req,res)=>{
-    const {id} = req.params;
-    console.log(id)
+    const {id} = req.params.id;
+    
     const item_without_html = store_without_html.find(entry => entry.id == id);
     const item_with_html = store_with_html.find(entry => entry.id == id);
     
