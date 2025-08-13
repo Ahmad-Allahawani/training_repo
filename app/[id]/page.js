@@ -22,7 +22,7 @@ export default function Page({ params }) {
     <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4 gap-4">
       <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Shared Text - wo</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Shared Text </h1>
           <button
             onClick={() => setShowSecond(!showSecond)}
             className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -38,7 +38,7 @@ export default function Page({ params }) {
       {showSecond && (
         <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-            Shared Text - w
+            Shared Text HTML
           </h1>
           <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
             {data.text_w_html}
