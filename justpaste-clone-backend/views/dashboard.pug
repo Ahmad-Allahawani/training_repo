@@ -17,7 +17,7 @@ html
           each text in store
             tr(class = "border-b.border-green-300.hover:bg-green-50")
               td.px-6.py-4 #{text.id}
-              td.px-6.py-4 #{text.text}
+              td.px-6.py-4 #{text.clean_text}
               td.px-6.py-4
                 form(method="POST", action=`/delete`)
                   input(type="hidden", name="id" value=text.id)

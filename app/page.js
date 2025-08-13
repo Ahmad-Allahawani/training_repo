@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 
+
 const Editor = dynamic(
   () => import("@tinymce/tinymce-react").then(mod => mod.Editor),
   { ssr: false }
@@ -16,11 +17,11 @@ export default function HomePage(){
     // const [isItalic, setItalic] = useState(false);
     // const [isUnderline, setunderline] = useState(false);
     const handleSubmit = async () =>{
-      if(!text.trim()){
+      if(!text.trim()&& text ===''){
         alert('Text is required')
         return;
       };
-        
+      
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save`,{
         method:'POST',
         headers: {'Content-Type':'application/json'},
@@ -59,7 +60,7 @@ export default function HomePage(){
           <div className="flex justify-end mt-4 gap-3 flex-wrap">
            
             <button
-              onClick={() => setunderline(!isUnderline)}
+              onClick={handleSubmit}
               className="px-6 py-2 bg-blue-600 hover:bg-blue-700 border border-gray-400 text-white font-semibold rounded-lg shadow transition duration-200"
             >
               Share
