@@ -23,7 +23,8 @@
     "nanoid": "^5.1.5",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
-    "pug": "^3.0.3"
+    "pug": "^3.0.3",
+    "string-strip-html": "^13.4.13"
   },
   "devDependencies": {
     "tailwindcss": "^3.3.5"

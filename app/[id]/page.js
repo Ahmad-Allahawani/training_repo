@@ -2,17 +2,18 @@
 import { useState, useEffect } from "react";
 import { useParams, notFound } from "next/navigation";
 
-export default function Page({ params }) {
+export default function Page() {
   const [data, setData] = useState(null);
   const [showSecond, setShowSecond] = useState(true);
   const { id } = useParams();
-
+  console.log(id);
   useEffect(() => {
    
     async function fetchData() {
-      
+      console.log(id)
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/text/${id}`);
-      if (!res.ok) return notFound();
+     
+      if (!res.ok) return <p>Loading...</p>;
       const json = await res.json();
       setData(json);
     }

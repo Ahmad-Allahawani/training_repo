@@ -4,10 +4,9 @@ const path = require('path')
 const {nanoid} = require('nanoid');
 const session = require('express-session');
 const flash = require('express-flash');
+const { stripHtml } = require('string-strip-html');
 
 require('dotenv').config({ path: path.resolve('../.env.local')});
-
-
 
 
 const app = express();
@@ -46,7 +45,7 @@ app.post('/api/save',(req,res)=>  {
     clean_text = removeHTMLTags(text);
     store_without_html.push({id,clean_text});
    
-    // console.log('[STORE UPDATED]:', store_without_html);
+    console.log('[STORE UPDATED]:', store_without_html);
     
     res.json({id});
 
@@ -54,21 +53,24 @@ app.post('/api/save',(req,res)=>  {
 });
 
 app.get('/api/text/:id',(req,res)=>{
-    const {id} = req.params.id;
-    
-    const item_without_html = store_without_html.find(entry => entry.id == id);
-    const item_with_html = store_with_html.find(entry => entry.id == id);
-    
-    console.log(item_with_html)
-    if(!item_without_html && !item_with_html ){
-        return res.status(404).json({error:'text not found'})
-    };
-    
-    res.json({
-      text_wo_html :item_without_html.clean_text ?? null,
-      text_w_html : item_with_html.text ?? null
-    });
+  const id = req.params.id;  
+ 
+
+  const item_without_html = store_without_html.find(entry => entry.id == id);
+  const item_with_html = store_with_html.find(entry => entry.id == id);
+  
+  if(!item_without_html && !item_with_html ){
+      console.log("No matching text found")
+      return res.status(404).json({error:'text not found'})
+  };
+  
+  res.json({
+    text_wo_html :item_without_html?.clean_text ?? null,
+    text_w_html : item_with_html?.text ?? null
+  });
 });
+
+
 
 app.get('/', (req, res) => {
   
