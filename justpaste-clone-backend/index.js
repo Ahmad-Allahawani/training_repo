@@ -5,11 +5,14 @@ const {nanoid} = require('nanoid');
 const session = require('express-session');
 const flash = require('express-flash');
 const { stripHtml } = require('string-strip-html');
+const { PrismaClient } = require("@prisma/client");
+
 
 require('dotenv').config({ path: path.resolve('../.env.local')});
 
 
 const app = express();
+const prisma = new PrismaClient();
 const PORT =process.env.PORT || 4000;
 
 var clean_text;
@@ -36,10 +39,24 @@ app.set('views',path.join(__dirname,'views'));
 app.set('view engine','pug');
 app.use(express.static(path.join(__dirname,'public')))
 
-app.post('/api/save',(req,res)=>  {
+app.post('/api/save', async (req,res)=>  {
     const {text} = req.body;
     const id = nanoid(8);
-
+   try{
+    const text_db = await prisma.text.create({
+      data: {
+        id,
+        text,
+      }
+    })
+    res.json({id: text_db.id});
+    console.log('db:',text_db)
+   }
+  
+   catch (error){
+    console.error(error);
+    res.status(500).json({ error: 'Something went wrong' });
+   }
    
     store_with_html.push({id,text})
     clean_text = removeHTMLTags(text);
@@ -47,27 +64,38 @@ app.post('/api/save',(req,res)=>  {
    
     console.log('[STORE UPDATED]:', store_without_html);
     
-    res.json({id});
+   
 
     
 });
 
-app.get('/api/text/:id',(req,res)=>{
-  const id = req.params.id;  
+app.get('/api/text/:id' , async(req,res)=>{
+  const id = req.params.id; 
  
 
   const item_without_html = store_without_html.find(entry => entry.id == id);
   const item_with_html = store_with_html.find(entry => entry.id == id);
   
-  if(!item_without_html && !item_with_html ){
-      console.log("No matching text found")
-      return res.status(404).json({error:'text not found'})
-  };
+  const text_db = await prisma.text.findUnique({
+    where: {
+      id: id,
+    },
+   })
+
+  // if(!item_without_html && !item_with_html ){
+  //     console.log("No matching text found")
+  //     return res.status(404).json({error:'text not found'})
+  // };
   
   res.json({
     text_wo_html :item_without_html?.clean_text ?? null,
-    text_w_html : item_with_html?.text ?? null
+    text_w_html : item_with_html?.text ?? null,
+    text_db_item : text_db.text
   });
+
+ 
+
+
 });
 
 
@@ -109,6 +137,14 @@ app.get('/', (req, res) => {
 app.listen(PORT,()=>{
     console.log(`server running on http://localhost:${PORT}`)
 })
+
+
+//database
+app.get("/users", async (req, res) => {
+  prisma.user.findMany()
+    .then(user => res.json(user))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
 
 
 //helper functions

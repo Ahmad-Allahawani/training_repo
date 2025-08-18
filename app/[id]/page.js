@@ -30,7 +30,9 @@ export default function Page() {
     }
   });
   useEffect(() => {
-    
+    fetch("http://localhost:3000/users") // or Render backend URL in prod
+    .then((res) => res.json())
+    .then((data) => setUsers(data));
 
 
    
@@ -86,6 +88,16 @@ export default function Page() {
         Share
       </button>
     </div>
+
+    <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Shared Text DB
+        </h1>
+        <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
+          {data.text_db_item}
+        </pre>
+      </div>
+  
   </main>
   );
 }
