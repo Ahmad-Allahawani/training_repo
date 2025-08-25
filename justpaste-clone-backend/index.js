@@ -113,20 +113,33 @@ app.get('/', (req, res) => {
     }
   });
 
-  app.post('/delete', (req,res)=>{
+  app.post('/delete',async (req,res)=>{
     const id = req.body.id;
-    prisma.textWithHtml.delete({
+   try{
+    await prisma.textWithOutHtml.delete({
       where:{
         id:id,
       }
     })
-    return res.redirect('/dashboard')
+    await prisma.textWithHtml.delete({
+      where:{
+        id:id,
+      }
+    })
+    const text_db_WOH = await prisma.TextWithOutHtml.findMany();
+    return res.render('dashboard',{text_db_WOH})
+   }
+   catch(error){
+    console.error(error);
+    return res.status(500).send({ success: false, message: 'Deletion failed' });
+   }
+    
   })
 
 
   app.get('/dashboard',requireAdmin, async(req,res)=>{
-   const text_db_WH =await prisma.textWithHtml.findMany();
-    return res.render('dashboard' , {text_db_WH});
+   const text_db_WOH =await prisma.TextWithOutHtml.findMany();
+    return res.render('dashboard' , {text_db_WOH});
   });
 
 app.listen(PORT,()=>{
@@ -134,12 +147,7 @@ app.listen(PORT,()=>{
 })
 
 
-//database
-app.get("/users", async (req, res) => {
-  prisma.user.findMany()
-    .then(user => res.json(user))
-    .catch(err => res.status(500).json({ error: err.message }));
-});
+
 
 
 //helper functions
