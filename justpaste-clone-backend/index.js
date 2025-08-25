@@ -41,56 +41,49 @@ app.use(express.static(path.join(__dirname,'public')))
 
 app.post('/api/save', async (req,res)=>  {
     const {text} = req.body;
-    const id = nanoid(8);
+    const Rid = nanoid(8);
+    clean_text = removeHTMLTags(text);
    try{
-    const text_db = await prisma.text.create({
+    const text_db_WH = await prisma.textWithHtml.create({
       data: {
-        id,
-        text,
+        id: Rid,
+        text:text,
+      },      
+    })
+    const text_db_WOH = await prisma.textWithOutHtml.create({
+      data:{
+        id:Rid,
+        text: clean_text,
       }
     })
-    res.json({id: text_db.id});
-    console.log('db:',text_db)
+    res.json({id: text_db_WOH.id});
+    console.log('db:',text_db_WOH)
    }
   
    catch (error){
     console.error(error);
     res.status(500).json({ error: 'Something went wrong' });
    }
-   
-    store_with_html.push({id,text})
-    clean_text = removeHTMLTags(text);
-    store_without_html.push({id,clean_text});
-   
-    console.log('[STORE UPDATED]:', store_without_html);
-    
-   
-
-    
 });
 
 app.get('/api/text/:id' , async(req,res)=>{
   const id = req.params.id; 
- 
-
-  const item_without_html = store_without_html.find(entry => entry.id == id);
-  const item_with_html = store_with_html.find(entry => entry.id == id);
   
-  const text_db = await prisma.text.findUnique({
+  const text_db_WOH = await prisma.textWithOutHtml.findUnique({
     where: {
       id: id,
     },
    })
+   const text_db_WH = await prisma.textWithHtml.findUnique({
+    where:{
+      id:id
+    },
+   })
 
-  // if(!item_without_html && !item_with_html ){
-  //     console.log("No matching text found")
-  //     return res.status(404).json({error:'text not found'})
-  // };
   
   res.json({
-    text_wo_html :item_without_html?.clean_text ?? null,
-    text_w_html : item_with_html?.text ?? null,
-    text_db_item : text_db.text
+    text_db_wo_item : text_db_WOH.text,
+    text_db_w_item : text_db_WH.text
   });
 
  
@@ -122,16 +115,18 @@ app.get('/', (req, res) => {
 
   app.post('/delete', (req,res)=>{
     const id = req.body.id;
-    store_without_html = store_without_html.filter(item => item.id != id)
-    store_with_html =store_with_html.filter(item => item.id != id)
-
+    prisma.textWithHtml.delete({
+      where:{
+        id:id,
+      }
+    })
     return res.redirect('/dashboard')
   })
 
 
-  app.get('/dashboard',requireAdmin,(req,res)=>{
-   
-    return res.render('dashboard' , {store: store_without_html});
+  app.get('/dashboard',requireAdmin, async(req,res)=>{
+   const text_db_WH =await prisma.textWithHtml.findMany();
+    return res.render('dashboard' , {text_db_WH});
   });
 
 app.listen(PORT,()=>{

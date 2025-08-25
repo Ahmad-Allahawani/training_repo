@@ -63,7 +63,7 @@ export default function Page() {
         </button>
       </div>
       <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
-        {data.text_wo_html}
+        {data.text_db_wo_item}
       </pre>
     </div>
 
@@ -74,7 +74,7 @@ export default function Page() {
           Shared Text HTML
         </h1>
         <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
-          {data.text_w_html}
+          {data.text_db_w_item}
         </pre>
       </div>
     )}
@@ -87,17 +87,7 @@ export default function Page() {
       >
         Share
       </button>
-    </div>
-
-    <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-          Shared Text DB
-        </h1>
-        <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
-          {data.text_db_item}
-        </pre>
-      </div>
-  
+    </div>  
   </main>
   );
 }

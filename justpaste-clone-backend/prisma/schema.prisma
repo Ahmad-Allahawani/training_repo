@@ -19,7 +19,12 @@ model User {
   email String  @unique
 }
 
-model Text {
+model TextWithHtml {
   id    String  @id 
+  text  String
+}
+
+model TextWithOutHtml {
+  id    String  @id
   text  String
 }

@@ -42,7 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 
-#styles
-styles.css
+# #styles
+# styles.css
 
 
