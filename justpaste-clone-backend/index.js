@@ -127,7 +127,7 @@ app.get('/', (req, res) => {
       }
     })
     const text_db_WOH = await prisma.TextWithOutHtml.findMany();
-    return res.render('dashboard',{text_db_WOH})
+    return res.redirect('dashboard')
    }
    catch(error){
     console.error(error);
