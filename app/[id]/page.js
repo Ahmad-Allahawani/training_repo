@@ -2,12 +2,19 @@
 import { useState, useEffect } from "react";
 import { useParams, notFound } from "next/navigation";
 import { useCallback } from "react";
+import { useRouter } from "next/navigation"
 
 export default function Page() {
   const [data, setData] = useState(null);
   const [showSecond, setShowSecond] = useState(true);
   const { id } = useParams();
+  const router = useRouter();
 
+
+  const handleEdit = (async ()=>{
+   
+    router.push(`/edit/${[id]}`)
+  })
 
   const handleShare = (async() => {
     if(navigator.share){
@@ -30,14 +37,9 @@ export default function Page() {
     }
   });
   useEffect(() => {
-    fetch("http://localhost:3000/users") // or Render backend URL in prod
-    .then((res) => res.json())
-    .then((data) => setUsers(data));
 
-
-   
     async function fetchData() {
-      console.log(id)
+      // console.log(id)
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/text/${id}`);
      
       if (!res.ok) return <p>Loading...</p>;
@@ -83,10 +85,18 @@ export default function Page() {
     <div className="flex justify-center w-full mt-6">
       <button
         onClick={handleShare}
-        className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
+        className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 "
       >
         Share
       </button>
+      <button
+        onClick={handleEdit}
+        className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 ml-2"
+      >
+        Edit
+      </button>
+      
+     
     </div>  
   </main>
   );

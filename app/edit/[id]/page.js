@@ -1,46 +1,65 @@
-'use client'
-
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import dynamic from "next/dynamic"
-import { Concert_One } from "next/font/google"
-
+"use client";
+import { useState, useEffect, use } from "react";
+import { useParams, notFound } from "next/navigation";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 
 const Editor = dynamic(
   () => import("@tinymce/tinymce-react").then(mod => mod.Editor),
   { ssr: false }
 )
-export default function HomePage(){
 
+export default function editpage(){
+    const [data, setData] = useState(null);
+    const {id }= useParams();
     const [text,setText] = useState('');
     const router = useRouter();
-    // const [isBold, setIsBold] = useState(false);
-    // const [isItalic, setItalic] = useState(false);
-    // const [isUnderline, setunderline] = useState(false);
-    const handleSubmit = async () =>{
+    // console.log(id)
+
+    const handleEditSubmit = async () =>{
       if(!text.trim()&& text ===''){
         alert('Text is required')
         return;
       };
       
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save`,{
-        method:'POST',
-        headers: {'Content-Type':'application/json'},
-        body:JSON.stringify({text})
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save/${id}`,{
+        method : 'PATCH',
+        headers : {'Content-Type':'application/json'},
+        body : JSON.stringify({text})
+        
       })
-      const data = await res.json()
-      router.push(`/${data.id}`)
+      console.log(id)
+      router.push(`/${id}`)
      
     }
 
-    
+
+    useEffect(()=>{
+        if(!id) return;
+
+        async function fetchData(){
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/edit/${id}`);
+        
+            const json = await res.json();
+            setData(json)
+            // console.log(json.text)
+        
+        
+        }
+        fetchData();
+    },[id]);
+    if (!data) {
+        return <p>Loading...</p>;
+    }
+
     return(
-      <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+        <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
         <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Share Your Text</h1>
     
           <Editor
           apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+          initialValue= {data.text} 
           init={{
             height: 300,
             menubar: false,
@@ -54,7 +73,7 @@ export default function HomePage(){
             content_style:
               "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
           }}
-          value={text}
+          
           onEditorChange={(newValue) => setText(newValue)}
         />
         
@@ -62,13 +81,13 @@ export default function HomePage(){
           <div className="flex justify-end mt-4 gap-3 flex-wrap">
            
             <button
-              onClick={handleSubmit}
+              onClick={handleEditSubmit}
               className="px-6 py-2 bg-blue-600 hover:bg-blue-700 border border-gray-400 text-white font-semibold rounded-lg shadow transition duration-200"
             >
-              Share
+              Edit
             </button>
           </div>
         </div>            
-      </main>
-    )
+      </main> 
+    ) 
 }

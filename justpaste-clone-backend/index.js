@@ -66,6 +66,34 @@ app.post('/api/save', async (req,res)=>  {
    }
 });
 
+app.patch('/api/save/:id', async (req,res)=>{
+  console.log("success")
+
+  const {text} = req.body;
+  clean_text = removeHTMLTags(text);
+  console.log(text)
+
+  const id = req.params.id;
+  const new_db_wo_text =await prisma.textWithOutHtml.update({
+    where: {
+      id: id,
+    },
+    data:{text : clean_text}
+  })
+  const new_db_w_text =await prisma.textWithHtml.update({
+    where: {
+      id: id,
+    },
+    data:{text}
+  })
+
+  res.json({
+    EDITED_wo_item : new_db_wo_text.text,
+    EDITED_w_item : new_db_w_text.text
+  
+  });
+})
+
 app.get('/api/text/:id' , async(req,res)=>{
   const id = req.params.id; 
   
@@ -86,10 +114,27 @@ app.get('/api/text/:id' , async(req,res)=>{
     text_db_w_item : text_db_WH.text
   });
 
- 
-
-
 });
+
+app.get('/api/edit/:id' ,async (req,res)=>{
+    // console.log('success')
+
+    const id = req.params.id;
+
+    const edited_text = await prisma.textWithOutHtml.findUnique({
+      where:{
+        id:id
+      }
+    })
+
+    // console.log(edited_text)
+
+    res.json({
+      text : edited_text.text
+    })
+
+
+})
 
 
 
