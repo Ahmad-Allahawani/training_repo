@@ -54,9 +54,18 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 gap-6">
     {/* Text without HTML */}
+    {data.title && (
+    <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-4  items-center justify-between border-b-4 border-blue-500">
+      <h2 className="text-2xl font-bold text-gray-800 text-center ">{data.title}</h2>
+     
+    </div>
+    )}
+
     <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Shared Text</h1>
+        
+
         <button
           onClick={() => setShowSecond(!showSecond)}
           className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"

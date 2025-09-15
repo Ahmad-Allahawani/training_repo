@@ -6,6 +6,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const { stripHtml } = require('string-strip-html');
 const { PrismaClient } = require("@prisma/client");
+const { title } = require('process');
 
 
 require('dotenv').config({ path: path.resolve('../.env.local')});
@@ -40,7 +41,7 @@ app.set('view engine','pug');
 app.use(express.static(path.join(__dirname,'public')))
 
 app.post('/api/save', async (req,res)=>  {
-    const {text} = req.body;
+    const {text ,title} = req.body;
     const Rid = nanoid(8);
     clean_text = removeHTMLTags(text);
    try{
@@ -48,6 +49,7 @@ app.post('/api/save', async (req,res)=>  {
       data: {
         id: Rid,
         text:text,
+        title:title,
       },      
     })
     const text_db_WOH = await prisma.textWithOutHtml.create({
@@ -56,6 +58,7 @@ app.post('/api/save', async (req,res)=>  {
         text: clean_text,
       }
     })
+    console.log(text_db_WH.title)
     res.json({id: text_db_WOH.id});
     console.log('db:',text_db_WOH)
    }
@@ -69,7 +72,7 @@ app.post('/api/save', async (req,res)=>  {
 app.patch('/api/save/:id', async (req,res)=>{
   console.log("success")
 
-  const {text} = req.body;
+  const {text ,title} = req.body;
   clean_text = removeHTMLTags(text);
   console.log(text)
 
@@ -78,20 +81,28 @@ app.patch('/api/save/:id', async (req,res)=>{
     where: {
       id: id,
     },
-    data:{text : clean_text}
+    data:{
+      text : clean_text,
+      
+    }
   })
   const new_db_w_text =await prisma.textWithHtml.update({
     where: {
       id: id,
     },
-    data:{text}
+    data:{
+      text,
+      title,
+    }
   })
 
-  res.json({
-    EDITED_wo_item : new_db_wo_text.text,
-    EDITED_w_item : new_db_w_text.text
+  res.status(200).json({ message: "PATCH successful" });
+
+  // res.json({
+  //   EDITED_wo_item : new_db_wo_text.text,
+  //   EDITED_w_item : new_db_w_text.text
   
-  });
+  // });
 })
 
 app.get('/api/text/:id' , async(req,res)=>{
@@ -110,6 +121,7 @@ app.get('/api/text/:id' , async(req,res)=>{
 
   
   res.json({
+    title : text_db_WH.title,
     text_db_wo_item : text_db_WOH.text,
     text_db_w_item : text_db_WH.text
   });
@@ -126,11 +138,16 @@ app.get('/api/edit/:id' ,async (req,res)=>{
         id:id
       }
     })
-
+    const edited_title = await prisma.textWithHtml.findUnique({
+      where:{
+        id:id
+      }
+    })
     // console.log(edited_text)
 
     res.json({
-      text : edited_text.text
+      text : edited_text.text,
+      title : edited_title.title
     })
 
 

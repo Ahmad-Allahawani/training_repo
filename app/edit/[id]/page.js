@@ -13,6 +13,7 @@ export default function editpage(){
     const [data, setData] = useState(null);
     const {id }= useParams();
     const [text,setText] = useState('');
+    const [title, setTitle] = useState('')
     const router = useRouter();
     // console.log(id)
 
@@ -25,10 +26,10 @@ export default function editpage(){
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save/${id}`,{
         method : 'PATCH',
         headers : {'Content-Type':'application/json'},
-        body : JSON.stringify({text})
+        body : JSON.stringify({text,title})
         
       })
-      console.log(id)
+      console.log(id)   
       router.push(`/${id}`)
      
     }
@@ -56,7 +57,13 @@ export default function editpage(){
         <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
         <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Share Your Text</h1>
-    
+          <input
+             type="text"
+             placeholder="Enter a title..."
+             className="w-full border border-gray-300 text-gray-800 rounded-lg p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             defaultValue={data.title}
+             onChange={(e) => setTitle(e.target.value)}
+          />
           <Editor
           apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           initialValue= {data.text} 
