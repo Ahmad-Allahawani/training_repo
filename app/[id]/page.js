@@ -60,6 +60,7 @@ export default function Page() {
      
     </div>
     )}
+    
 
     <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
       <div className="flex justify-between items-center mb-6">
@@ -84,9 +85,13 @@ export default function Page() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Shared Text HTML
         </h1>
-        <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
+        {/* <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
           {data.text_db_w_item}
-        </pre>
+        </pre> */}
+        <div
+          className="prose prose-blue max-w-none bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto"
+          dangerouslySetInnerHTML={{ __html: data.text_db_w_item }}
+        />
       </div>
     )}
 

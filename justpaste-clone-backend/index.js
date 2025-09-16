@@ -41,7 +41,8 @@ app.set('view engine','pug');
 app.use(express.static(path.join(__dirname,'public')))
 
 app.post('/api/save', async (req,res)=>  {
-    const {text ,title} = req.body;
+    const {text , title ,pastedUrl } = req.body;
+    console.log(pastedUrl)
     const Rid = nanoid(8);
     clean_text = removeHTMLTags(text);
    try{

@@ -23,11 +23,17 @@ export default function HomePage(){
         alert('Text is required')
         return;
       };
+      console.log(text)
       
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save`,{
         method:'POST',
         headers: {'Content-Type':'application/json'},
-        body:JSON.stringify({text,title})
+        body:JSON.stringify({
+          text,
+          title,
+          pastedUrl: window.lastPastedUrl || null,
+        
+        })
       })
       const data = await res.json()
       router.push(`/${data.id}`)
@@ -37,7 +43,7 @@ export default function HomePage(){
     
     return(
       <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-        <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
+        <div className="w-full max-w-4xl  bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Share Your Text</h1>
           <input
              type="text"
@@ -49,7 +55,7 @@ export default function HomePage(){
           <Editor
           apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           init={{
-            height: 300,
+            height: 500,
             menubar: false,
             plugins: [
               "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
@@ -57,9 +63,21 @@ export default function HomePage(){
               "insertdatetime", "media", "table", "code", "help", "wordcount"
             ],
             toolbar:
-              "bold italic underline | bullist numlist | link image | undo redo | removeformat",
+              "bold italic underline strikethrough forecolor removeformat | bullist numlist |undo redo |  | link unlink image|",
+              
+
+            
+            paste_preprocess: function (plugin, args) {
+              const pastedContent  = args.content.trim();
+              console.log("Raw pasted:", pastedContent);
+
+              window.lastPastedUrl = pastedContent;
+
+          },
+
             content_style:
               "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
+            
           }}
           value={text}
           onEditorChange={(newValue) => setText(newValue)}
