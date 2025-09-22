@@ -63,7 +63,7 @@ export default function HomePage(){
               "insertdatetime", "media", "table", "code", "help", "wordcount"
             ],
             toolbar:
-              "bold italic underline strikethrough forecolor removeformat | bullist numlist |undo redo |  | link unlink image|",
+              "bold italic underline strikethrough forecolor removeformat| bullist numlist |undo redo |alignleft aligncenter alignright alignjustify | link unlink image|preview fullscreen code",
               
 
             

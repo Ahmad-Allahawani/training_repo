@@ -61,30 +61,15 @@ export default function Page() {
     </div>
     )}
     
-
-    <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Shared Text</h1>
-        
-
-        <button
-          onClick={() => setShowSecond(!showSecond)}
-          className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          {showSecond ? "Hide HTML" : "Show HTML"}
-        </button>
-      </div>
-      <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
-        {data.text_db_wo_item}
-      </pre>
-    </div>
-
-    {/* Text with HTML */}
+    {/* FUll RENDER */}
+     
     {showSecond && (
-      <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+        
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-          Shared Text HTML
+          Full Render
         </h1>
+        
         {/* <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
           {data.text_db_w_item}
         </pre> */}
@@ -92,10 +77,28 @@ export default function Page() {
           className="prose prose-blue max-w-none bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto"
           dangerouslySetInnerHTML={{ __html: data.text_db_w_item }}
         />
+        
       </div>
     )}
 
-    {/* Share button at bottom center */}
+    <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+    <button
+          onClick={() => setShowSecond(!showSecond)}
+          className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          {showSecond ? "Hide HTML" : "Show HTML"}
+        </button>
+      <div className="justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800 text-center">Text Only</h1>
+      </div>
+      <pre className="whitespace-pre-wrap bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto">
+        {data.text_db_wo_item}
+      </pre>
+    </div>
+
+    
+
+    
     <div className="flex justify-center w-full mt-6">
       <button
         onClick={handleShare}

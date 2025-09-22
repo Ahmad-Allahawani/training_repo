@@ -134,20 +134,14 @@ app.get('/api/edit/:id' ,async (req,res)=>{
 
     const id = req.params.id;
 
-    const edited_text = await prisma.textWithOutHtml.findUnique({
-      where:{
-        id:id
-      }
-    })
     const edited_title = await prisma.textWithHtml.findUnique({
       where:{
         id:id
       }
     })
-    // console.log(edited_text)
 
     res.json({
-      text : edited_text.text,
+      text : edited_title.text,
       title : edited_title.title
     })
 

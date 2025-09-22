@@ -55,7 +55,7 @@ export default function editpage(){
 
     return(
         <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-        <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
+        <div className="w-full max-w-4xl  bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Share Your Text</h1>
           <input
              type="text"
@@ -68,7 +68,7 @@ export default function editpage(){
           apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           initialValue= {data.text} 
           init={{
-            height: 300,
+            height: 500,
             menubar: false,
             plugins: [
               "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
@@ -76,7 +76,7 @@ export default function editpage(){
               "insertdatetime", "media", "table", "code", "help", "wordcount"
             ],
             toolbar:
-              "bold italic underline | bullist numlist | link image | undo redo | removeformat",
+            "bold italic underline strikethrough forecolor removeformat| bullist numlist |undo redo |alignleft aligncenter alignright alignjustify | link unlink image|preview fullscreen code",
             content_style:
               "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
           }}
