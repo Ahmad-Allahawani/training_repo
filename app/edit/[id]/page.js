@@ -12,13 +12,13 @@ const Editor = dynamic(
 export default function editpage(){
     const [data, setData] = useState(null);
     const {id }= useParams();
-    const [text,setText] = useState('');
     const [title, setTitle] = useState('')
     const router = useRouter();
     // console.log(id)
 
     const handleEditSubmit = async () =>{
-      if(!text.trim()&& text ===''){
+      console.log(data)
+      if(data.text ===''){
         alert('Text is required')
         return;
       };
@@ -26,10 +26,12 @@ export default function editpage(){
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save/${id}`,{
         method : 'PATCH',
         headers : {'Content-Type':'application/json'},
-        body : JSON.stringify({text,title})
+        body : JSON.stringify({
+          text :data,
+          title})
         
       })
-      console.log(id)   
+      
       router.push(`/${id}`)
      
     }
@@ -49,8 +51,8 @@ export default function editpage(){
         }
         fetchData();
     },[id]);
-    if (!data) {
-        return <p>Loading...</p>;
+    if (data===null) {
+      return <p>loading...</p>
     }
 
     return(
@@ -69,7 +71,7 @@ export default function editpage(){
           initialValue= {data.text} 
           init={{
             height: 500,
-            menubar: false,
+            menubar: true,
             plugins: [
               "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
               "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
@@ -77,11 +79,45 @@ export default function editpage(){
             ],
             toolbar:
             "bold italic underline strikethrough forecolor removeformat| bullist numlist |undo redo |alignleft aligncenter alignright alignjustify | link unlink image|preview fullscreen code",
+            formats: {
+              alignleft: {
+                selector: 'p,img',
+                styles: {
+                  textAlign: 'left',
+                },
+                attributes: {
+                  style: 'display:block; margin-right:auto;', 
+                }
+              },
+              aligncenter: {
+                selector: 'p,img',
+                styles: {
+                  textAlign: 'center',
+                },
+                attributes: {
+                  style: 'display:block; margin-left:auto; margin-right:auto;',
+                }
+              },
+              alignright: {
+                selector: 'p,img',
+                styles: {
+                  textAlign: 'right',
+                },
+                attributes: {
+                  style: 'display:block; margin-left:auto;',
+                }
+              }
+            },
             content_style:
               "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
           }}
           
-          onEditorChange={(newValue) => setText(newValue)}
+          onEditorChange={(newValue) =>{
+            // console.log("Editor content changed:", newValue);
+            setData(newValue)}
+          }
+             
+          
         />
         
     

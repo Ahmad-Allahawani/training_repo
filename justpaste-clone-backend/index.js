@@ -74,7 +74,7 @@ app.patch('/api/save/:id', async (req,res)=>{
   console.log("success")
 
   const {text ,title} = req.body;
-  clean_text = removeHTMLTags(text);
+  
   console.log(text)
 
   const id = req.params.id;

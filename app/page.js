@@ -65,7 +65,36 @@ export default function HomePage(){
             toolbar:
               "bold italic underline strikethrough forecolor removeformat| bullist numlist |undo redo |alignleft aligncenter alignright alignjustify | link unlink image|preview fullscreen code",
               
-
+              formats: {
+                alignleft: {
+                  selector: 'p,img',
+                  styles: {
+                    textAlign: 'left',
+                  },
+                  attributes: {
+                    style: 'display:block; margin-right:auto;', 
+                  }
+                },
+                aligncenter: {
+                  selector: 'p,img',
+                  styles: {
+                    textAlign: 'center',
+                  },
+                  attributes: {
+                    style: 'display:block; margin-left:auto; margin-right:auto;',
+                  }
+                },
+                alignright: {
+                  selector: 'p,img',
+                  styles: {
+                    textAlign: 'right',
+                  },
+                  attributes: {
+                    style: 'display:block; margin-left:auto;',
+                  }
+                }
+              },
+            
             
             paste_preprocess: function (plugin, args) {
               const pastedContent  = args.content.trim();

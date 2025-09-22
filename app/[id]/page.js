@@ -14,6 +14,7 @@ export default function Page() {
   const handleEdit = (async ()=>{
    
     router.push(`/edit/${[id]}`)
+    
   })
 
   const handleShare = (async() => {
@@ -76,7 +77,16 @@ export default function Page() {
         <div
           className="prose prose-blue max-w-none bg-gray-100 text-gray-800 p-4 rounded-lg border border-gray-300 overflow-auto"
           dangerouslySetInnerHTML={{ __html: data.text_db_w_item }}
-        />
+        />  
+        <style jsx global>{`
+          .align-left { text-align: left; }
+          .align-center { text-align: center; }
+          .align-right { text-align: right; }
+          .align-justify { text-align: justify; }
+          .align-right img { float: right; display: block; margin-left: auto; }
+          .align-left img { float: left; display: block; margin-right: auto; }
+        `}</style>
+        
         
       </div>
     )}
