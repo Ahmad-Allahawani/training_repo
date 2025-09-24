@@ -17,7 +17,7 @@ export default function editpage(){
     // console.log(id)
 
     const handleEditSubmit = async () =>{
-      console.log(data)
+      // console.log(data)
       if(data.text ===''){
         alert('Text is required')
         return;
@@ -78,38 +78,51 @@ export default function editpage(){
               "insertdatetime", "media", "table", "code", "help", "wordcount"
             ],
             toolbar:
-            "bold italic underline strikethrough forecolor removeformat| bullist numlist |undo redo |alignleft aligncenter alignright alignjustify | link unlink image|preview fullscreen code",
+            "bold italic underline strikethrough forecolor removeformat|imgLeft imgCenter imgRight| bullist numlist |alignleft aligncenter alignright alignjustify | undo redo | link unlink image|preview fullscreen code",
+            image_advtab: true, 
             formats: {
-              alignleft: {
-                selector: 'p,img',
-                styles: {
-                  textAlign: 'left',
-                },
-                attributes: {
-                  style: 'display:block; margin-right:auto;', 
-                }
-              },
-              aligncenter: {
-                selector: 'p,img',
-                styles: {
-                  textAlign: 'center',
-                },
-                attributes: {
-                  style: 'display:block; margin-left:auto; margin-right:auto;',
-                }
-              },
-              alignright: {
-                selector: 'p,img',
-                styles: {
-                  textAlign: 'right',
-                },
-                attributes: {
-                  style: 'display:block; margin-left:auto;',
-                }
-              }
+              alignleft: [
+                { selector: 'img', styles: { display: 'block', 'margin-left': '0', 'margin-right': 'auto' } },
+                { selector: 'p', styles: { 'text-align': 'left' } }
+              ],
+              aligncenter: [
+                { selector: 'img', styles: { display: 'block', 'margin-left': 'auto', 'margin-right': 'auto' } },
+                { selector: 'p', styles: { 'text-align': 'center' } }
+              ],
+              alignright: [
+                { selector: 'img', styles: { display: 'block', 'margin-left': 'auto', 'margin-right': '0' } },
+                { selector: 'p', styles: { 'text-align': 'right' } }
+              ]
             },
+            // setup: (editor) => {
+            //   editor.on('ExecCommand', (e) => {
+            //     console.log('Toolbar command executed:', e.command);
+            
+            //     const img = editor.selection.getNode();
+            //     if (img && img.nodeName === 'IMG') {
+            //       let style = '';
+            
+            //       if (e.command === 'JustifyLeft') {
+            //         style = 'display:block; margin-right:auto; margin-left:0;';
+            //       } else if (e.command === 'JustifyCenter') {
+            //         style = 'display:block; margin-left:auto; margin-right:auto;';
+            //       } else if (e.command === 'JustifyRight') {
+            //         style = 'display:block; margin-left:auto; margin-right:0;';
+            //       }
+            
+            //       editor.dom.setAttrib(img, 'style', style);  // ✅ TinyMCE API
+            //       editor.nodeChanged();                       // ✅ refresh state
+            //     }
+            //   });
+            // },
+            
+            
             content_style:
-              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
+            ` body { font-family:Helvetica,Arial,sans-serif; font-size:14px }
+            img { max-width: 100%; height: auto; }
+            .align-right img { float: right; display: block; margin-left:auto; }
+            .align-left img { float: left; display: block; margin-right:auto; }
+            .align-center img { display:block; margin-left:auto; margin-right:auto; }`
           }}
           
           onEditorChange={(newValue) =>{

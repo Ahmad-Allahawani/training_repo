@@ -56,43 +56,28 @@ export default function HomePage(){
           apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           init={{
             height: 500,
-            menubar: false,
+            menubar: true,
             plugins: [
               "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
               "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
               "insertdatetime", "media", "table", "code", "help", "wordcount"
             ],
             toolbar:
-              "bold italic underline strikethrough forecolor removeformat| bullist numlist |undo redo |alignleft aligncenter alignright alignjustify | link unlink image|preview fullscreen code",
+            "bold italic underline strikethrough forecolor removeformat|imgLeft imgCenter imgRight| bullist numlist |alignleft aligncenter alignright alignjustify | undo redo | link unlink image|preview fullscreen code",
               
               formats: {
-                alignleft: {
-                  selector: 'p,img',
-                  styles: {
-                    textAlign: 'left',
-                  },
-                  attributes: {
-                    style: 'display:block; margin-right:auto;', 
-                  }
-                },
-                aligncenter: {
-                  selector: 'p,img',
-                  styles: {
-                    textAlign: 'center',
-                  },
-                  attributes: {
-                    style: 'display:block; margin-left:auto; margin-right:auto;',
-                  }
-                },
-                alignright: {
-                  selector: 'p,img',
-                  styles: {
-                    textAlign: 'right',
-                  },
-                  attributes: {
-                    style: 'display:block; margin-left:auto;',
-                  }
-                }
+                alignleft: [
+                  { selector: 'img', styles: { display: 'block', 'margin-left': '0', 'margin-right': 'auto' } },
+                  { selector: 'p', styles: { 'text-align': 'left' } }
+                ],
+                aligncenter: [
+                  { selector: 'img', styles: { display: 'block', 'margin-left': 'auto', 'margin-right': 'auto' } },
+                  { selector: 'p', styles: { 'text-align': 'center' } }
+                ],
+                alignright: [
+                  { selector: 'img', styles: { display: 'block', 'margin-left': 'auto', 'margin-right': '0' } },
+                  { selector: 'p', styles: { 'text-align': 'right' } }
+                ]
               },
             
             

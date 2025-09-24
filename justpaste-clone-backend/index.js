@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname,'public')))
 
 app.post('/api/save', async (req,res)=>  {
     const {text , title ,pastedUrl } = req.body;
-    console.log(pastedUrl)
+    // console.log(pastedUrl)
     const Rid = nanoid(8);
     clean_text = removeHTMLTags(text);
    try{
@@ -59,9 +59,9 @@ app.post('/api/save', async (req,res)=>  {
         text: clean_text,
       }
     })
-    console.log(text_db_WH.title)
+    // console.log(text_db_WH.title)
     res.json({id: text_db_WOH.id});
-    console.log('db:',text_db_WOH)
+   
    }
   
    catch (error){
@@ -75,7 +75,7 @@ app.patch('/api/save/:id', async (req,res)=>{
 
   const {text ,title} = req.body;
   
-  console.log(text)
+  // console.log(text)
 
   const id = req.params.id;
   const new_db_wo_text =await prisma.textWithOutHtml.update({
