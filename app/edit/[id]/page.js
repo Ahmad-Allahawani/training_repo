@@ -94,27 +94,7 @@ export default function editpage(){
                 { selector: 'p', styles: { 'text-align': 'right' } }
               ]
             },
-            // setup: (editor) => {
-            //   editor.on('ExecCommand', (e) => {
-            //     console.log('Toolbar command executed:', e.command);
             
-            //     const img = editor.selection.getNode();
-            //     if (img && img.nodeName === 'IMG') {
-            //       let style = '';
-            
-            //       if (e.command === 'JustifyLeft') {
-            //         style = 'display:block; margin-right:auto; margin-left:0;';
-            //       } else if (e.command === 'JustifyCenter') {
-            //         style = 'display:block; margin-left:auto; margin-right:auto;';
-            //       } else if (e.command === 'JustifyRight') {
-            //         style = 'display:block; margin-left:auto; margin-right:0;';
-            //       }
-            
-            //       editor.dom.setAttrib(img, 'style', style);  // ✅ TinyMCE API
-            //       editor.nodeChanged();                       // ✅ refresh state
-            //     }
-            //   });
-            // },
             
             
             content_style:

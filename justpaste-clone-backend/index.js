@@ -119,8 +119,6 @@ app.get('/api/text/:id' , async(req,res)=>{
       id:id
     },
    })
-
-  
   res.json({
     title : text_db_WH.title,
     text_db_wo_item : text_db_WOH.text,
